@@ -1,17 +1,33 @@
 
-### Test server
+### Test SPA
 GET http://localhost:3000
 
-### Get users
-GET http://localhost:3000/users
+### Ver usuarios (primera vista por defecto)
+GET http://localhost:3000/
 
-### Create user
-POST http://localhost:3000/users
+### Listar todos los usuarios (API)
+GET http://localhost:3000/api/users
 
-### Delete users
-DELETE http://localhost:3000/users
+### Crear usuario (API)
+POST http://localhost:3000/api/users
+Content-Type: application/json
 
 {
-    _id: 6984f7f5f26d1f8a62f92f3e
+    "name": "Santiago",
+    "email": "santiago@test.com"
 }
 
+### Obtener usuario por ID (API)
+GET http://localhost:3000/api/users/6984f7f5f26d1f8a62f92f3e
+
+### Actualizar usuario (API)
+PUT http://localhost:3000/api/users/6984f7f5f26d1f8a62f92f3e
+Content-Type: application/json
+
+{
+    "name": "Santiago Actualizado",
+    "email": "santiago.nuevo@test.com"
+}
+
+### Eliminar usuario (API)
+DELETE http://localhost:3000/api/users/6984f7f5f26d1f8a62f92f3e

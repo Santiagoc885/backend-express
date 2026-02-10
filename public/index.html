@@ -4,300 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Usuarios</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        @media (max-width: 768px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .card h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: 600;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 5px;
-            font-size: 1em;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background: #764ba2;
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            color: #667eea;
-            font-weight: 600;
-            margin: 10px 0;
-        }
-
-        .loading.show {
-            display: block;
-        }
-
-        .message {
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: 600;
-            display: none;
-        }
-
-        .message.show {
-            display: block;
-        }
-
-        .success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .users-section {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .users-section h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-        }
-
-        .user-list {
-            display: grid;
-            gap: 15px;
-        }
-
-        .user-card {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: slideIn 0.3s ease-in-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .user-info {
-            flex: 1;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: #333;
-            font-size: 1.1em;
-        }
-
-        .user-email {
-            color: #666;
-            font-size: 0.9em;
-            margin-top: 3px;
-        }
-
-        .user-id {
-            color: #999;
-            font-size: 0.8em;
-            margin-top: 3px;
-            word-break: break-all;
-        }
-
-        .user-actions {
-            display: flex;
-            gap: 10px;
-            margin-left: 10px;
-        }
-
-        .btn-delete {
-            padding: 8px 15px;
-            background: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: background 0.3s;
-        }
-
-        .btn-delete:hover {
-            background: #c82333;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: #999;
-            padding: 30px;
-            font-size: 1.1em;
-        }
-
-        .refresh-btn {
-            background: #28a745;
-            margin-bottom: 15px;
-        }
-
-        .refresh-btn:hover {
-            background: #218838;
-        }
-    </style>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <div class="container">
-        <h1>👥 Gestor de Usuarios</h1>
+        <h1> Gestor de Usuarios</h1>
 
-        <div class="main-grid">
-            <!-- Card Crear Usuario -->
-            <div class="card">
-                <h2>➕ Crear Usuario</h2>
-                <form id="createUserForm">
-                    <div class="form-group">
-                        <label for="name">Nombre:</label>
-                        <input type="text" id="name" name="name" required placeholder="Ej: Santiago">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required placeholder="Ej: santiago@test.com">
-                    </div>
-                    <div class="loading" id="createLoading">⏳ Creando usuario...</div>
-                    <button type="submit">Crear Usuario</button>
-                    <div class="message" id="createMessage"></div>
-                </form>
-            </div>
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showView('view')"> Ver Usuarios</button>
+            <button class="nav-btn" onclick="showView('manage')"> Gestionar Usuarios</button>
+        </div>
 
-            <!-- Card Buscar Usuario -->
-            <div class="card">
-                <h2>🔍 Buscar Usuario por ID</h2>
-                <form id="searchUserForm">
-                    <div class="form-group">
-                        <label for="userId">ID del Usuario:</label>
-                        <input type="text" id="userId" name="userId" required placeholder="Ej: 65a123b456c789d012e34f56">
-                    </div>
-                    <div class="loading" id="searchLoading">⏳ Buscando usuario...</div>
-                    <button type="submit">Buscar</button>
-                    <div class="message" id="searchMessage"></div>
-                </form>
-                <div id="searchResult" style="margin-top: 20px;"></div>
+        <!-- VISTA: Ver Usuarios -->
+        <div id="view" class="view-section">
+            <div class="users-section">
+                <h2> Todos los Usuarios</h2>
+                <button class="refresh-btn" id="refreshBtnView"> Actualizar Lista</button>
+                <div class="loading" id="usersLoadingView"> Cargando usuarios...</div>
+                <div class="user-list" id="usersListView">
+                    <div class="empty-state">No hay usuarios aún.</div>
+                </div>
             </div>
         </div>
 
-        <!-- Sección de Usuarios -->
-        <div class="users-section">
-            <h2>📋 Listado de Usuarios</h2>
-            <button class="refresh-btn" id="refreshBtn">🔄 Actualizar Lista</button>
-            <div class="loading" id="usersLoading">⏳ Cargando usuarios...</div>
-            <div class="user-list" id="usersList">
-                <div class="empty-state">No hay usuarios aún. ¡Crea uno para empezar!</div>
+        <!-- VISTA: Gestionar Usuarios -->
+        <div id="manage" class="view-section" style="display: none;">
+            <div class="main-grid">
+                <!-- Card Crear Usuario -->
+                <div class="card">
+                    <h2> Crear Usuario</h2>
+                    <form id="createUserForm">
+                        <div class="form-group">
+                            <label for="name">Nombre:</label>
+                            <input type="text" id="name" name="name" required placeholder="Ej: Santiago">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required placeholder="Ej: santiago@test.com">
+                        </div>
+                        <div class="loading" id="createLoading"> Creando usuario...</div>
+                        <button type="submit">Crear Usuario</button>
+                        <div class="message" id="createMessage"></div>
+                    </form>
+                </div>
+
+                <!-- Card Buscar Usuario -->
+                <div class="card">
+                    <h2> Buscar Usuario por ID</h2>
+                    <form id="searchUserForm">
+                        <div class="form-group">
+                            <label for="userId">ID del Usuario:</label>
+                            <input type="text" id="userId" name="userId" required placeholder="Ej: 65a123b456c789d012e34f56">
+                        </div>
+                        <div class="loading" id="searchLoading"> Buscando usuario...</div>
+                        <button type="submit">Buscar</button>
+                        <div class="message" id="searchMessage"></div>
+                    </form>
+                    <div id="searchResult" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+
+            <!-- Sección de Usuarios -->
+            <div class="users-section">
+                <h2> Listado de Usuarios</h2>
+                <button class="refresh-btn" id="refreshBtnManage"> Actualizar Lista</button>
+                <div class="loading" id="usersLoadingManage"> Cargando usuarios...</div>
+                <div class="user-list" id="usersListManage">
+                    <div class="empty-state">No hay usuarios aún. ¡Crea uno para empezar!</div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        const API_URL = window.location.origin;
+        const API_URL = window.location.origin + '/api';
 
+        // Cambiar entre vistas
+        function showView(viewName) {
+            // Ocultar todas las vistas
+            document.querySelectorAll('.view-section').forEach(view => {
+                view.style.display = 'none';
+            });
+
+            // Mostrar la vista seleccionada
+            document.getElementById(viewName).style.display = 'block';
+
+            // Actualizar botones activos
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Cargar usuarios cuando abra la vista
+            if (viewName === 'view') {
+                loadUsersView();
+            } else {
+                loadUsersManage();
+            }
+        }
+
+        // ========== VISTA: Ver Usuarios ==========
+        async function loadUsersView() {
+            const loading = document.getElementById('usersLoadingView');
+            const usersList = document.getElementById('usersListView');
+
+            loading.classList.add('show');
+
+            try {
+                const response = await fetch(`${API_URL}/users`);
+                const users = await response.json();
+
+                if (users.length > 0) {
+                    usersList.innerHTML = users.map(user => `
+                        <div class="user-card">
+                            <div class="user-info">
+                                <div class="user-name">${user.name}</div>
+                                <div class="user-email">${user.email}</div>
+                                <div class="user-id">ID: ${user._id}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    usersList.innerHTML = '<div class="empty-state">No hay usuarios aún.</div>';
+                }
+            } catch (error) {
+                usersList.innerHTML = `<div class="empty-state"> Error al cargar usuarios: ${error.message}</div>`;
+            } finally {
+                loading.classList.remove('show');
+            }
+        }
+
+        document.getElementById('refreshBtnView').addEventListener('click', loadUsersView);
+
+        // ========== VISTA: Gestionar Usuarios ==========
+        
         // Crear Usuario
         document.getElementById('createUserForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -320,16 +160,16 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    message.textContent = '✅ Usuario creado exitosamente';
+                    message.textContent = ' Usuario creado exitosamente';
                     message.classList.add('show', 'success');
                     document.getElementById('createUserForm').reset();
-                    loadUsers();
+                    loadUsersManage();
                 } else {
-                    message.textContent = '❌ ' + (data.message || 'Error al crear usuario');
+                    message.textContent =  + (data.message || 'Error al crear usuario');
                     message.classList.add('show', 'error');
                 }
             } catch (error) {
-                message.textContent = '❌ Error de conexión: ' + error.message;
+                message.textContent = ' Error de conexión: ' + error.message;
                 message.classList.add('show', 'error');
             } finally {
                 loading.classList.remove('show');
@@ -353,7 +193,7 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    message.textContent = '✅ Usuario encontrado';
+                    message.textContent = ' Usuario encontrado';
                     message.classList.add('show', 'success');
                     result.innerHTML = `
                         <div class="user-card">
@@ -365,21 +205,21 @@
                         </div>
                     `;
                 } else {
-                    message.textContent = '❌ ' + (data.message || 'Usuario no encontrado');
+                    message.textContent =  + (data.message || 'Usuario no encontrado');
                     message.classList.add('show', 'error');
                 }
             } catch (error) {
-                message.textContent = '❌ Error de conexión: ' + error.message;
+                message.textContent = ' Error de conexión: ' + error.message;
                 message.classList.add('show', 'error');
             } finally {
                 loading.classList.remove('show');
             }
         });
 
-        // Cargar todos los usuarios
-        async function loadUsers() {
-            const loading = document.getElementById('usersLoading');
-            const usersList = document.getElementById('usersList');
+        // Cargar usuarios en vista Gestionar
+        async function loadUsersManage() {
+            const loading = document.getElementById('usersLoadingManage');
+            const usersList = document.getElementById('usersListManage');
 
             loading.classList.add('show');
 
@@ -396,7 +236,7 @@
                                 <div class="user-id">ID: ${user._id}</div>
                             </div>
                             <div class="user-actions">
-                                <button class="btn-delete" onclick="deleteUser('${user._id}')">🗑️ Eliminar</button>
+                                <button class="btn-delete" onclick="deleteUser('${user._id}')"> Eliminar</button>
                             </div>
                         </div>
                     `).join('');
@@ -420,7 +260,7 @@
 
                 if (response.ok) {
                     alert('✅ Usuario eliminado');
-                    loadUsers();
+                    loadUsersManage();
                 } else {
                     alert('❌ Error: ' + (data.message || 'No se pudo eliminar'));
                 }
@@ -429,11 +269,10 @@
             }
         }
 
-        // Botón actualizar
-        document.getElementById('refreshBtn').addEventListener('click', loadUsers);
+        document.getElementById('refreshBtnManage').addEventListener('click', loadUsersManage);
 
         // Cargar usuarios al iniciar
-        loadUsers();
+        loadUsersView();
     </script>
 </body>
 </html>

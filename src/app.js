@@ -17,17 +17,22 @@ app.use(express.json())
 // Servir archivos estáticos desde la carpeta public
 app.use(express.static(path.join(__dirname, '../public')))
 
-// Función para iniciar el servidor
 const startServer = async () => {
   try {
     await connectDB()
+
+    // Las rutas API se registran primero
+    app.use('/api/users', userRoutes)
     
-    // Las rutas se registran DESPUÉS de que la BD está conectada
-    app.use('/users', userRoutes)
-    
-    app.get('/', (req, res) => {
-      res.send('API running.....')
-  
+    // SPA: Middleware para servir index.html en todas las rutas que no sean API
+    app.use((req, res) => {
+      res.sendFile(path.join(__dirname, '../public/index.html'))
+    })
+
+    // Iniciar servidor DESPUÉS de registrar todas las rutas
+    const PORT = process.env.PORT || 3000
+    app.listen(PORT, () => {
+      console.log(` ---> Server running on http://localhost:${PORT} <---`)
     })
   } catch (error) {
     console.error('Failed to start server:', error.message)
@@ -36,10 +41,5 @@ const startServer = async () => {
 }
 
 startServer()
-
-const PORT = process.env.PORT || 3000
-app.listen(PORT, () => {
-  console.log(` ---> Server running on http://localhost:${PORT} <---`)
-})
 
 
