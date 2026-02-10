@@ -16,6 +16,7 @@ Una aplicación completa para gestionar usuarios con MongoDB, Express y una inte
 ### Paso 1: Preparar el repositorio
 
 1. Asegúrate de que todo esté en Git:
+
 ```bash
 git add .
 git commit -m "Agregar frontend y configuración Vercel"
@@ -33,8 +34,9 @@ git push origin main
 
 1. En la sección "Environment Variables" de Vercel, agrega:
    - **MONGO_URI**: Tu cadena de conexión de MongoDB
-   
+
 Ejemplo:
+
 ```
 mongodb+srv://usuario:contraseña@cluster.mongodb.net/nombreBaseDatos
 ```
@@ -65,11 +67,13 @@ PORT=3000
 ### Ejecutar
 
 **Desarrollo (con nodemon):**
+
 ```bash
 npm run dev
 ```
 
 **Producción:**
+
 ```bash
 npm start
 ```
@@ -98,6 +102,7 @@ backend-express/
 ## 🔌 API Endpoints
 
 ### POST /users
+
 Crear un nuevo usuario
 
 ```bash
@@ -110,6 +115,7 @@ curl -X POST http://localhost:3000/users \
 ```
 
 ### GET /users
+
 Obtener todos los usuarios
 
 ```bash
@@ -117,6 +123,7 @@ curl http://localhost:3000/users
 ```
 
 ### GET /users/:id
+
 Obtener un usuario por ID
 
 ```bash
@@ -124,6 +131,7 @@ curl http://localhost:3000/users/65a123b456c789d012e34f56
 ```
 
 ### PUT /users/:id
+
 Actualizar un usuario
 
 ```bash
@@ -136,6 +144,7 @@ curl -X PUT http://localhost:3000/users/65a123b456c789d012e34f56 \
 ```
 
 ### DELETE /users/:id
+
 Eliminar un usuario
 
 ```bash
@@ -159,19 +168,23 @@ curl -X DELETE http://localhost:3000/users/65a123b456c789d012e34f56
 ## 🐛 Solución de Problemas
 
 ### Error E11000 (Email duplicado)
+
 - El email ya existe en la base de datos
 - Usa un email diferente o elimina el usuario existente
 
 ### "Database not connected"
+
 - Verifica que MONGO_URI esté configurada correctamente
 - Comprueba que MongoDB Atlas esté accesible desde Vercel
 
 ### Error de CORS
+
 - Si accedes desde un dominio diferente, agrega configuración CORS en `app.js`
 
 ## 📞 Soporte
 
 Si encuentras problemas, verifica:
+
 1. La conexión a MongoDB
 2. Las variables de entorno en Vercel
 3. Los logs de la consola de Vercel
