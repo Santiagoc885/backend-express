@@ -3,11 +3,19 @@ import express from 'express'
 import dotenv from 'dotenv'
 import userRoutes from './routes/user.js'
 import connectDB from './config/db.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 dotenv.config()
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 const app = express()
 app.use(express.json())
+
+// Servir archivos estáticos desde la carpeta public
+app.use(express.static(path.join(__dirname, '../public')))
 
 // Función para iniciar el servidor
 const startServer = async () => {
