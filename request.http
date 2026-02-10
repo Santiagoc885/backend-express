@@ -1,0 +1,17 @@
+
+### Test server
+GET http://localhost:3000
+
+### Get users
+GET http://localhost:3000/users
+
+### Create user
+POST http://localhost:3000/users
+
+### Delete users
+DELETE http://localhost:3000/users
+
+{
+    _id: 6984f7f5f26d1f8a62f92f3e
+}
+
